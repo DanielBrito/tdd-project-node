@@ -5,11 +5,12 @@ const Portfolio = require("./portfolio");
 const Bank = require("./bank");
 
 class MoneyTest {
-  constructor() {
+  setup() {
     this.bank = new Bank();
-    this.bank.addExchangeRates("EUR", "USD", 1.2);
-    this.bank.addExchangeRates("USD", "KRW", 1100);
+    this.bank.addExchangeRate("EUR", "USD", 1.2);
+    this.bank.addExchangeRate("USD", "KRW", 1100);
   }
+
   testMultiplication() {
     let tenEuros = new Money(10, "EUR");
     let twentyEuros = new Money(20, "EUR");
@@ -85,14 +86,20 @@ class MoneyTest {
     );
   }
 
-  testConversion() {
-    let bank = new Bank();
-
-    bank.addExchangeRates("EUR", "USD", 1.2);
-
+  testConversionWithDifferentRatesBetweenTwoCurrencies() {
     let tenEuros = new Money(10, "EUR");
 
-    assert.deepStrictEqual(bank.convert(tenEuros, "USD"), new Money(12, "USD"));
+    assert.deepStrictEqual(
+      this.bank.convert(tenEuros, "USD"),
+      new Money(12, "USD")
+    );
+
+    this.bank.addExchangeRate("EUR", "USD", 1.3);
+
+    assert.deepStrictEqual(
+      this.bank.convert(tenEuros, "USD"),
+      new Money(13, "USD")
+    );
   }
 
   testConversionWithMissingExchangeRate() {
@@ -113,6 +120,15 @@ class MoneyTest {
       return typeof moneyPrototype[p] === "function" && p.startsWith("test");
     });
 
+    return this.randomizeTestOrder(testMethods);
+  }
+
+  randomizeTestOrder(testMethods) {
+    for (let i = testMethods.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [testMethods[i], testMethods[j]] = [testMethods[j], testMethods[i]];
+    }
+
     return testMethods;
   }
 
@@ -123,7 +139,9 @@ class MoneyTest {
       console.log("Running %s()", m);
 
       let method = Reflect.get(this, m);
+
       try {
+        this.setup();
         Reflect.apply(method, this, []);
       } catch (e) {
         if (e instanceof assert.AssertionError) {

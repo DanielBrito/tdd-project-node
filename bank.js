@@ -5,7 +5,7 @@ class Bank {
     this.exchangeRates = new Map();
   }
 
-  addExchangeRates(currencyFrom, currencyTo, rate) {
+  addExchangeRate(currencyFrom, currencyTo, rate) {
     let key = `${currencyFrom}->${currencyTo}`;
 
     this.exchangeRates.set(key, rate);
