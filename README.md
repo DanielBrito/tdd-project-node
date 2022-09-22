@@ -11,3 +11,7 @@ _Node.js_ project from the book [**Learning Test-Driven Develpment: a Polyglot G
 - Learn how to write a simple and effective unit test harness in JavaScript
 - Set up a continuous integration environment with the unit tests produced during TDD
 - Write clean, uncluttered code using TDD in Go, JavaScript, and Python
+
+### Tools
+
+- [Act](https://github.com/nektos/act): Run GitHub Actions Locally ([Installing](https://lindevs.com/install-act-on-ubuntu))
