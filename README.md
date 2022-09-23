@@ -15,3 +15,4 @@ _Node.js_ project from the book [**Learning Test-Driven Develpment: a Polyglot G
 ### Tools
 
 - [Act](https://github.com/nektos/act): Run GitHub Actions Locally ([Installing](https://lindevs.com/install-act-on-ubuntu))
+- [JSHint](https://jshint.com/): Gather complexity metrics for JS code.

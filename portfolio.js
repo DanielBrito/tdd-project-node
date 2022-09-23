@@ -16,15 +16,15 @@ class Portfolio {
       try {
         let convertedMoney = bank.convert(money, currency);
 
-        return sum + convertedMoney.amount;
+        return sum.add(convertedMoney);
       } catch (error) {
         failures.push(error.message);
         return sum;
       }
-    }, 0);
+    }, new Money(0, currency));
 
     if (!failures.length) {
-      return new Money(total, currency);
+      return total;
     }
 
     throw new Error(`Missing exchange rate(s): [${failures.join()}]`);
